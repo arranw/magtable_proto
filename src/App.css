@@ -1,22 +1,12 @@
-.App {
-  text-align: center;
+::-webkit-scrollbar {
+  width: 5px; /* Remove scrollbar space */
+  background: #c9d6df; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #4ecca3;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+body {
+  background: #f0f5f9;
 }
