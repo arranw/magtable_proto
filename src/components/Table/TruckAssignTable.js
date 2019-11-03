@@ -23,6 +23,7 @@ const TruckList = styled.ul`
   list-style: none;
   padding: 0 10px;
   margin: 0;
+  overflow-x: auto;
 `;
 
 const ScheduleList = styled.ul`
@@ -44,13 +45,8 @@ const AssignTable = ({ schedule: { schedule, loading }, trucks, setSchedule, set
 
   const handleEmployeeDrop = useCallback(
     (slotIndex, truckNumber, employee) => {
-      console.log(slotIndex, truckNumber, employee);
-
-      var start = Date.now();
       setTruckEmployee({ slotIndex, truckNumber, employee });
-      console.log(Date.now() - start);
       setEmployeeTruck({ employee, truckNumber });
-      console.log(Date.now() - start);
     },
     [setTruckEmployee, setEmployeeTruck]
   );

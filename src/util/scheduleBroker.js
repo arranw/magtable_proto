@@ -11,10 +11,15 @@ module.exports = {
     const schedule = [];
 
     const res = await axios.get(
-      "https://www6.whentowork.com/cgi-bin/w2wFF.dll/empshiftlist.htm?SID=181268317041A4&UTF8=Y&date=11/01/2019"
+      "https://www6.whentowork.com/cgi-bin/w2wFF.dll/empshiftlist.htm?SID=32325584041A4&UTF8=Y&date=11/02/2019"
     );
 
     const root = parser.parse(res.data);
+
+    // if the user who made the w2w request has a shift on the requested day, another
+    // partial shift will be added to the list, creating an Incoming Shift Data Error
+    const selfShift = root.querySelector(".arrows");
+    selfShift.removeChild(root.querySelector(".c0"));
 
     const sftstart = root.querySelectorAll(".sftstart");
     const sftend = root.querySelectorAll(".sftend");
@@ -22,7 +27,7 @@ module.exports = {
     const sftname = root.querySelectorAll(".sftname");
 
     // Ensure each list is equal length
-    if (sftpos.length !== sftstart.length || sftpos.length !== sftend.length) {
+    if (sftpos.length !== sftstart.length || sftpos.length !== sftend.length || sftpos.length !== sftname.length) {
       throw new Error("Incoming Shift Data Error");
     }
 

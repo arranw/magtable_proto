@@ -5,7 +5,7 @@ import EmpDrop from "./EmpDrop";
 const TruckDiv = styled.div`
   margin: 0.5rem 0;
   display: grid;
-  grid-template-columns: auto 250px 100px 1fr;
+  grid-template-columns: auto 350px 100px 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
     "trucknum emps shift1"
