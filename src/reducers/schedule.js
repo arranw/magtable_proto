@@ -11,6 +11,16 @@ const scheduleSlice = createSlice({
       state.schedule = action.payload;
       state.loading = false;
     },
+    setEmployeeTruck(state, action) {
+      state.schedule.forEach(shift => {
+        shift.employees.forEach(emp => {
+          if (emp.name === action.payload.employee.name) {
+            emp.truck = action.payload.truckNumber;
+          }
+        });
+      });
+      // @todo ^ foreach
+    },
     toggleTodo(state, action) {
       const todo = state.find(todo => todo.id === action.payload);
       todo.complete = !todo.complete;
@@ -22,6 +32,5 @@ const scheduleSlice = createSlice({
 });
 
 const { actions, reducer } = scheduleSlice;
-
-export const { setSchedule } = actions;
+export const { setSchedule, setEmployeeTruck } = actions;
 export default reducer;

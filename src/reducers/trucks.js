@@ -1,5 +1,4 @@
 import { createSlice } from "redux-starter-kit";
-const _ = require("lodash");
 
 const trucksSlice = createSlice({
   name: "trucks",
@@ -21,15 +20,13 @@ const trucksSlice = createSlice({
   },
   reducers: {
     setTruckEmployee(state, action) {
+      var start = Date.now();
       const truck = state.trucks.find(truck => truck.id === action.payload.truckNumber);
+
+      console.log(action.payload);
+
       truck.employees[action.payload.slotIndex] = action.payload.employee;
-    },
-    toggleTodo(state, action) {
-      const todo = state.find(todo => todo.id === action.payload);
-      todo.complete = !todo.complete;
-    },
-    deleteTodo(state, action) {
-      return state.filter(todo => todo.id !== action.payload);
+      console.log(Date.now() - start);
     }
   }
 });
