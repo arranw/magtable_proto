@@ -75,6 +75,7 @@ const AssignTable = ({ schedule: { schedule, loading }, trucks, setSchedule, set
             ))}
           </ScheduleList>
         )}
+
         <TruckList>
           <li>
             {trucks.map((truck, index) => {
