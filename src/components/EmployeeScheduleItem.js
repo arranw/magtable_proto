@@ -61,7 +61,7 @@ const QualifiedIcon = styled.i`
 `;
 
 const EmployeeScheduleItem = ({ handleEmployeeDrop, employee }) => {
-  const { name, position, start, end, truck, isGreen, isQualified } = employee;
+  const { id, name, position, start, end, truck, isGreen, isQualified } = employee;
 
   const [{ isDragging }, drag] = useDrag({
     item: { name, type: "Emp" },

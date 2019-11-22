@@ -2,9 +2,6 @@ import React from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
 
-let borderColor;
-let bgColor;
-
 const EmployeeDrop = styled.span`
   width: 100%;
   outline-offset: -1px;

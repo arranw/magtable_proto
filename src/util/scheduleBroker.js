@@ -10,8 +10,10 @@ module.exports = {
   getSched: async function(searchPositions) {
     const schedule = [];
 
+    // @todo update date to current day
+    // @todo take SID as input
     const res = await axios.get(
-      "https://www6.whentowork.com/cgi-bin/w2wFF.dll/empshiftlist.htm?SID=32325584041A4&UTF8=Y&date=11/02/2019"
+      "https://www6.whentowork.com/cgi-bin/w2wFF.dll/empshiftlist.htm?SID=32325584041A4&UTF8=Y&date=11/03/2019"
     );
 
     const root = parser.parse(res.data);
