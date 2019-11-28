@@ -1,6 +1,6 @@
 ::-webkit-scrollbar {
   width: 5px; /* Remove scrollbar space */
-  background: #c9d6df; /* Optional: just make scrollbar invisible */
+  background: #52616b; /* Optional: just make scrollbar invisible */
 }
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
@@ -8,5 +8,10 @@
 }
 
 body {
-  background: #f0f5f9;
+  height: 100vh;
+  background: #c9d6df;
+}
+
+.navbar {
+  background: #52616b !important;
 }

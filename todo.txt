@@ -1,1 +1,16 @@
+<<<<<<< HEAD
 ampm handoff
+=======
+shift takeover support (am to pm)
+
+implement firestore, auth?
+
+rewrite scheduleBroker to be triggered manually and simply push data to firestore database
+ui will update based on firestore database
+
+fill firestore with truck records (id, employees[])
+
+once api data is being recieved by firestore properly, apply normalizr
+
+rewrite redux logic with new normalized state
+>>>>>>> 8925ca6b64c30bc04840d9397908bf0b73347292

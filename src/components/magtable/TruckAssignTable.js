@@ -1,27 +1,28 @@
 import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { DndProvider } from "react-dnd";
+import styled from "styled-components";
 import HTML5Backend from "react-dnd-html5-backend";
-import ScheduleDivider from "../ScheduleDivider";
-import EmployeeScheduleItem from "../EmployeeScheduleItem";
-import Truck from "../Trucks/Truck";
+
+import Truck from "./Truck";
+import EmployeeScheduleItem from "./EmployeeScheduleItem";
+import ScheduleDivider from "./ScheduleDivider";
 import { setSchedule } from "../../reducers/schedule";
-import scheduleBroker from "../../util/scheduleBroker";
 import { setTruckEmployee } from "../../reducers/trucks";
 import { setEmployeeTruck } from "../../reducers/schedule";
+import scheduleBroker from "../../util/scheduleBroker";
 
 const AssignTableDiv = styled.div`
   display: grid;
   grid-template-columns: 300px auto;
-  grid-template-rows: 100vh;
+  grid-template-rows: 90vh;
   grid-template-areas: "schedule main";
 `;
 
 const TruckList = styled.ul`
   grid-area: main;
   list-style: none;
-  padding: 0 10px;
+  padding: 0;
   margin: 0;
   overflow-x: auto;
 `;
@@ -62,6 +63,7 @@ const AssignTable = ({ schedule: { schedule, loading }, trucks, setSchedule, set
                   <ScheduleDivider
                     key={scheduleSection.scheduleSection.start}
                     time={scheduleSection.scheduleSection.start}
+                    count={scheduleSection.employees.length}
                   />
                 )}
                 {scheduleSection.employees.map(employee => (
@@ -75,6 +77,7 @@ const AssignTable = ({ schedule: { schedule, loading }, trucks, setSchedule, set
             ))}
           </ScheduleList>
         )}
+
         <TruckList>
           <li>
             {trucks.map((truck, index) => {
@@ -92,7 +95,4 @@ const mapStateToProps = state => ({
   schedule: state.schedule
 });
 
-export default connect(
-  mapStateToProps,
-  { setSchedule, setTruckEmployee, setEmployeeTruck }
-)(React.memo(AssignTable));
+export default connect(mapStateToProps, { setSchedule, setTruckEmployee, setEmployeeTruck })(React.memo(AssignTable));

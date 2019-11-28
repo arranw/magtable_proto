@@ -3,18 +3,13 @@ import { useDrop } from "react-dnd";
 import styled from "styled-components";
 
 const EmployeeDrop = styled.span`
-  width: 100%;
   outline-offset: -1px;
-  font-weight: 400;
   height: 50%;
-  /* border-right: 1px solid #52616b; */
-  outline: 1px solid #52616b;
   text-align: center;
   background: #c9d6df;
 
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-auto-columns: auto;
+  grid-template-columns: 45% 45% 10%;
   align-items: center;
 
   ${({ isActive }) =>
@@ -24,6 +19,23 @@ const EmployeeDrop = styled.span`
     outline: 2px solid #4ecca3;
     outline-offset: -1px;
   `}
+
+  &:hover {
+    .delete-icon {
+      display: block;
+    }
+  }
+`;
+
+const DeleteIcon = styled.i`
+  color: darkred;
+  cursor: pointer;
+  float: right;
+  display: none;
+
+  &:hover {
+    color: red;
+  }
 `;
 
 const EmpDrop = ({ truckNumber, slot, assignedEmployee }) => {
@@ -43,6 +55,7 @@ const EmpDrop = ({ truckNumber, slot, assignedEmployee }) => {
     <EmployeeDrop isActive={isActive} ref={drop}>
       {name && <span>{name}</span>}
       {start && end && <span>{start + "-" + end}</span>}
+      {name && <DeleteIcon className="delete-icon fas fa-times"></DeleteIcon>}
     </EmployeeDrop>
   );
 };

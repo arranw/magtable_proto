@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useDrag } from "react-dnd";
 
 const ListItem = styled.li`
-  border-radius: 3px;
-  margin: 0.5rem;
+  /* border-radius: 3px; */
+  /* margin: 0.5rem; */
+  border-bottom: 1px solid #1e2022;
   cursor: pointer;
   user-select: none;
   background: #c9d6df;
@@ -17,6 +18,7 @@ const ListItem = styled.li`
     "name truck"
     "pos sched";
   align-items: center;
+  ${({ isDragging }) => isDragging && `opacity: 0.4; outline: 1px solid #4ecca3;`}
 `;
 
 const NameLabel = styled.div`
@@ -54,14 +56,14 @@ const GreenIcon = styled.i`
   padding: 3px;
 `;
 
-const QualifiedIcon = styled.i`
-  color: darkorange;
-  font-size: 15pt;
-  padding: 3px;
-`;
+// const QualifiedIcon = styled.i`
+//   color: darkorange;
+//   font-size: 15pt;
+//   padding: 3px;
+// `;
 
 const EmployeeScheduleItem = ({ handleEmployeeDrop, employee }) => {
-  const { id, name, position, start, end, truck, isGreen, isQualified } = employee;
+  const { id, name, position, start, end, truck, isGreen } = employee;
 
   const [{ isDragging }, drag] = useDrag({
     item: { name, type: "Emp" },
@@ -82,13 +84,10 @@ const EmployeeScheduleItem = ({ handleEmployeeDrop, employee }) => {
       isDragging: monitor.isDragging()
     })
   });
-  const opacity = isDragging ? 0.4 : 1;
-  console.log("render");
 
   return (
-    <ListItem ref={drag}>
+    <ListItem ref={drag} isDragging={isDragging}>
       <NameLabel>
-        {!isQualified && <QualifiedIcon className="fas fa-exclamation"></QualifiedIcon>}
         {isGreen && <GreenIcon className="fas fa-circle"></GreenIcon>}
         {name}
       </NameLabel>
