@@ -15,3 +15,7 @@ body {
 .navbar {
   background: #52616b !important;
 }
+
+a {
+  text-decoration: none !important;
+}

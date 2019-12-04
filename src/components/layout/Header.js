@@ -1,20 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
-const HeaderDiv = styled.div`
-  background: #52616b;
-  border-bottom: 2px solid #4ecca3;
-`;
-
-const HeaderBranding = styled.h2`
-  color: #eee;
-  margin: 0;
-  padding: 0.5rem;
-`;
-
-const NavLink = styled.span`
-  margin-left: auto;
-`;
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
