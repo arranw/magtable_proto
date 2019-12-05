@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import EmpDrop from "./EmpDrop";
+import { setTruckLocation } from "../../reducers/trucks";
+import { connect } from "react-redux";
 
 const TruckDiv = styled.div`
   /* margin: 0.5rem 0; */
@@ -54,17 +56,29 @@ const TruckNotes = styled.textarea`
   color: inherit;
 `;
 
-const Truck = ({ truck }) => {
+const Truck = ({ truck, setTruckLocation }) => {
   const { id, employees } = truck;
+
+  const locationChange = e => {
+    setTruckLocation({
+      truckNumber: truck.id,
+      location: e.target.value
+    });
+  };
 
   return (
     <TruckDiv>
       <TruckNumber>{id}</TruckNumber>
       <TruckOpStatus>GO</TruckOpStatus>
-      <LocationSelect>
-        <option selected></option>
-        <option>EAST</option>
-        <option>WEST</option>
+      <LocationSelect
+        value={truck.location}
+        onChange={e => {
+          locationChange(e);
+        }}
+      >
+        <option value="-1"></option>
+        <option value="West">EAST</option>
+        <option value="East">WEST</option>
       </LocationSelect>
       <Emps>
         <EmpDrop slot={0} truckNumber={id} assignedEmployee={employees[0]} />
@@ -77,4 +91,4 @@ const Truck = ({ truck }) => {
 
 Truck.propTypes = {};
 
-export default React.memo(Truck);
+export default connect(null, { setTruckLocation })(React.memo(Truck));

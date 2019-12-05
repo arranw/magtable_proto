@@ -19,6 +19,14 @@ const ListItem = styled.li`
     "pos sched";
   align-items: center;
   ${({ isDragging }) => isDragging && `opacity: 0.4; outline: 1px solid #4ecca3;`}
+
+  @media (max-width: 600px) {
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "name truck"
+      "pos sched";
+  }
 `;
 
 const NameLabel = styled.div`
@@ -31,6 +39,9 @@ const TruckLabel = styled.div`
   text-align: center;
   border-top-right-radius: 3px;
 
+  @media (max-width: 600px) {
+    text-align: right;
+  }
   & > span {
     padding: 0 0.5rem;
     border-radius: 10px;
@@ -42,12 +53,18 @@ const TruckLabel = styled.div`
 const PositionLabel = styled.div`
   grid-area: pos;
   vertical-align: center;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const SchedLabel = styled.div`
   grid-area: sched;
   text-align: center;
   border-bottom-right-radius: 3px;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const GreenIcon = styled.i`
@@ -63,7 +80,7 @@ const GreenIcon = styled.i`
 // `;
 
 const EmployeeScheduleItem = ({ handleEmployeeDrop, employee }) => {
-  const { id, name, position, start, end, truck, isGreen } = employee;
+  const { name, position, start, end, truck, isGreen } = employee;
 
   const [{ isDragging }, drag] = useDrag({
     item: { name, type: "Emp" },

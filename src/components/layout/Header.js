@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -23,19 +22,19 @@ const Header = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Table
-            </a>
+            <Link className="nav-link" to="/table/view">
+              View Table
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="assign">
+            <Link className="nav-link" to="/table/assign">
               Assign
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <Link className="nav-link" to="/snags">
               Snags
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

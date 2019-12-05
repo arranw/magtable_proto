@@ -12,10 +12,20 @@ body {
   background: #c9d6df;
 }
 
+#root {
+  max-height: 100%;
+}
+
 .navbar {
   background: #52616b !important;
 }
 
 a {
   text-decoration: none !important;
+}
+
+@media (max-width: 600px) {
+  ::-webkit-scrollbar {
+    width: 20px; /* Remove scrollbar space */
+  }
 }
