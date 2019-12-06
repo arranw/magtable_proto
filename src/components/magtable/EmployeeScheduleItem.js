@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useDrag } from "react-dnd";
 
-const ListItem = styled.li`
+const Employee = styled.div`
   /* border-radius: 3px; */
   /* margin: 0.5rem; */
-  border-bottom: 1px solid #1e2022;
   cursor: pointer;
   user-select: none;
   background: #c9d6df;
@@ -15,39 +14,20 @@ const ListItem = styled.li`
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
-    "name truck"
+    "name ."
     "pos sched";
-  align-items: center;
-  ${({ isDragging }) => isDragging && `opacity: 0.4; outline: 1px solid #4ecca3;`}
 
+  ${({ isDragging }) => isDragging && `opacity: 0.4; outline: 1px solid #4ecca3;`}
   @media (max-width: 600px) {
     grid-template-columns: auto;
     grid-template-rows: auto;
-    grid-template-areas:
-      "name truck"
-      "pos sched";
+    grid-template-areas: "name";
   }
 `;
 
 const NameLabel = styled.div`
   grid-area: name;
   vertical-align: center;
-`;
-
-const TruckLabel = styled.div`
-  grid-area: truck;
-  text-align: center;
-  border-top-right-radius: 3px;
-
-  @media (max-width: 600px) {
-    text-align: right;
-  }
-  & > span {
-    padding: 0 0.5rem;
-    border-radius: 10px;
-    background-color: #71a95a;
-    color: #f0f5f9;
-  }
 `;
 
 const PositionLabel = styled.div`
@@ -80,20 +60,13 @@ const GreenIcon = styled.i`
 // `;
 
 const EmployeeScheduleItem = ({ handleEmployeeDrop, employee }) => {
-  const { name, position, start, end, truck, isGreen } = employee;
+  const { name, position, start, end, isGreen } = employee;
 
   const [{ isDragging }, drag] = useDrag({
     item: { name, type: "Emp" },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
-        const employee = {
-          name,
-          start,
-          end,
-          truck: dropResult.name
-        };
-
         handleEmployeeDrop(dropResult.slot, dropResult.name, employee);
       }
     },
@@ -103,19 +76,14 @@ const EmployeeScheduleItem = ({ handleEmployeeDrop, employee }) => {
   });
 
   return (
-    <ListItem ref={drag} isDragging={isDragging}>
+    <Employee ref={drag} isDragging={isDragging}>
       <NameLabel>
         {isGreen && <GreenIcon className="fas fa-circle"></GreenIcon>}
         {name}
       </NameLabel>
       <PositionLabel>{position}</PositionLabel>
-      {truck && (
-        <TruckLabel>
-          <span>{truck}</span>
-        </TruckLabel>
-      )}
       <SchedLabel>{start + "-" + end}</SchedLabel>
-    </ListItem>
+    </Employee>
   );
 };
 

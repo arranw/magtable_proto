@@ -1,6 +1,5 @@
 const axios = require("axios");
 const parser = require("node-html-parser");
-const _ = require("lodash");
 const uuidv4 = require("uuid/v4");
 
 const GREEN_CODE = "(GP)";
@@ -8,12 +7,10 @@ const GREEN_CODE = "(GP)";
 
 module.exports = {
   getSched: async function(searchPositions) {
-    const schedule = [];
-
     // @todo update date to current day
     // @todo take SID as input
     const res = await axios.get(
-      "https://www6.whentowork.com/cgi-bin/w2wFF.dll/empshiftlist.htm?SID=32325584041A4&UTF8=Y&date=11/26/2019"
+      "https://www6.whentowork.com/cgi-bin/w2wFF.dll/empshiftlist.htm?SID=32325584041A4&UTF8=Y&date=12/05/2019"
     );
 
     const root = parser.parse(res.data);
@@ -68,19 +65,9 @@ module.exports = {
 
       if (employee.name && searchPositions.includes(employee.position)) employees.push(employee);
     }
-
-    startTimes.forEach(start => {
-      schedule.push({
-        scheduleSection: {
-          id: uuidv4(),
-          start
-        },
-        employees: _.filter(employees, { start: start })
-      });
-    });
-
-    // console.log(schedule);
-
-    return schedule;
+    return {
+      employees,
+      startTimes
+    };
   }
 };

@@ -3,34 +3,22 @@ import { createSlice } from "redux-starter-kit";
 const scheduleSlice = createSlice({
   name: "schedule",
   initialState: {
-    schedule: null,
+    employees: null,
+    startTimes: null,
     loading: true
   },
   reducers: {
     setSchedule(state, action) {
-      state.schedule = action.payload;
+      state.employees = action.payload.employees;
+      state.startTimes = action.payload.startTimes;
       state.loading = false;
     },
-    setEmployeeTruck(state, action) {
-      state.schedule.forEach(shift => {
-        shift.employees.forEach(emp => {
-          if (emp.name === action.payload.employee.name) {
-            emp.truck = action.payload.truckNumber;
-          }
-        });
-      });
-      // @todo ^ foreach
-    },
-    toggleTodo(state, action) {
-      const todo = state.find(todo => todo.id === action.payload);
-      todo.complete = !todo.complete;
-    },
-    deleteTodo(state, action) {
-      return state.filter(todo => todo.id !== action.payload);
+    removeFromSchedule(state, action) {
+      state.employees = state.employees.filter(emp => emp.id !== action.payload.id);
     }
   }
 });
 
 const { actions, reducer } = scheduleSlice;
-export const { setSchedule, setEmployeeTruck } = actions;
+export const { setSchedule, removeFromSchedule } = actions;
 export default reducer;

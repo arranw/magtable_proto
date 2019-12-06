@@ -48,17 +48,36 @@ const TruckEmployee = styled.div`
   font-size: 2rem;
 `;
 
+const TruckInop = styled.div`
+  height: 100%;
+  padding: 20px;
+  font-weight: 400;
+  font-size: 2rem;
+  color: red;
+`;
+
 const ViewTable = ({ trucks }) => {
   return (
     <ViewTableDiv>
       {trucks &&
-        trucks.map(truck => (
-          <Truck key={truck.id}>
-            <TruckNumber>{truck.id}</TruckNumber>
-            <TruckLocation>{truck.status === "INOP" ? "Out of Service" : truck.location}</TruckLocation>
-            {truck.employees && <TruckEmployee>{truck.employees[0].name}</TruckEmployee>}
-          </Truck>
-        ))}
+        trucks.map(truck => {
+          if (truck.status !== "INOP") {
+            return (
+              <Truck key={truck.id}>
+                <TruckNumber>{truck.id}</TruckNumber>
+                {truck.location && <TruckLocation>{truck.location}</TruckLocation>}
+                {truck.operator && <TruckEmployee>{truck.operator.name}</TruckEmployee>}
+              </Truck>
+            );
+          } else {
+            return (
+              <Truck key={truck.id}>
+                <TruckNumber>{truck.id}</TruckNumber>
+                <TruckInop>INOP</TruckInop>
+              </Truck>
+            );
+          }
+        })}
     </ViewTableDiv>
   );
 };

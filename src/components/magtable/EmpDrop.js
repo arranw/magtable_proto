@@ -1,23 +1,19 @@
 import React from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
+import EmployeeScheduleItem from "./EmployeeScheduleItem";
 
-const EmployeeDrop = styled.span`
-  outline-offset: -1px;
-  height: 50%;
+const EmployeeDrop = styled.div`
   text-align: center;
   background: #c9d6df;
+  height: 100%;
 
-  display: grid;
-  grid-template-columns: 45% 45% 10%;
-  align-items: center;
+  display: block;
 
   ${({ isActive }) =>
     isActive &&
     `
-    background: #f0f5f9;
-    outline: 2px solid #4ecca3;
-    outline-offset: -1px;
+    background: #e0e5e9;
   `}
 
   &:hover {
@@ -27,22 +23,11 @@ const EmployeeDrop = styled.span`
   }
 `;
 
-const DeleteIcon = styled.i`
-  color: darkred;
-  cursor: pointer;
-  float: right;
-  display: none;
-
-  &:hover {
-    color: red;
-  }
-`;
-
-const EmpDrop = ({ truckNumber, slot, assignedEmployee }) => {
-  const { name, start, end } = assignedEmployee;
+const EmpDrop = ({ truckNumber, slot, operator, handleEmployeeDrop }) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: "Emp",
     drop: () => ({ name: truckNumber, slot }),
+    canDrop: () => !operator,
     collect: monitor => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop()
@@ -53,9 +38,9 @@ const EmpDrop = ({ truckNumber, slot, assignedEmployee }) => {
 
   return (
     <EmployeeDrop isActive={isActive} ref={drop}>
-      {name && <span>{name}</span>}
-      {start && end && <span>{start + "-" + end}</span>}
-      {name && <DeleteIcon className="delete-icon fas fa-times"></DeleteIcon>}
+      {operator && (
+        <EmployeeScheduleItem handleEmployeeDrop={handleEmployeeDrop} employee={operator}></EmployeeScheduleItem>
+      )}
     </EmployeeDrop>
   );
 };

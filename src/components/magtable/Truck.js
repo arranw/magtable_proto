@@ -9,10 +9,8 @@ const TruckDiv = styled.div`
   display: grid;
   border-bottom: 1px solid #52616b;
   grid-template-columns: auto 75px 100px 350px 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas:
-    "trucknum opstatus location emps notes"
-    "trucknum opstatus location emps notes";
+  grid-template-rows: 1fr;
+  grid-template-areas: "trucknum opstatus location emps notes";
   background: #c9d6df;
   color: #1e2022;
 `;
@@ -56,8 +54,8 @@ const TruckNotes = styled.textarea`
   color: inherit;
 `;
 
-const Truck = ({ truck, setTruckLocation }) => {
-  const { id, employees } = truck;
+const Truck = ({ truck, setTruckLocation, handleEmployeeDrop }) => {
+  const { id, operator } = truck;
 
   const locationChange = e => {
     setTruckLocation({
@@ -77,12 +75,11 @@ const Truck = ({ truck, setTruckLocation }) => {
         }}
       >
         <option value="-1"></option>
-        <option value="West">EAST</option>
-        <option value="East">WEST</option>
+        <option value="East">EAST</option>
+        <option value="West">WEST</option>
       </LocationSelect>
       <Emps>
-        <EmpDrop slot={0} truckNumber={id} assignedEmployee={employees[0]} />
-        <EmpDrop slot={1} truckNumber={id} assignedEmployee={employees[1]} />
+        <EmpDrop slot={0} truckNumber={id} operator={operator} handleEmployeeDrop={handleEmployeeDrop} />
       </Emps>
       <TruckNotes></TruckNotes>
     </TruckDiv>

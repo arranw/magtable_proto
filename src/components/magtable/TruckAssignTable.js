@@ -1,17 +1,24 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { connect } from "react-redux";
 import { DndProvider } from "react-dnd";
 import styled from "styled-components";
-import HTML5Backend from "react-dnd-html5-backend";
-import TouchBackend from "react-dnd-touch-backend";
-import MultiBackend from "react-dnd-multi-backend";
-import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
+import MultiBackend, { Preview } from "react-dnd-multi-backend";
+import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch"; // or any other pipeline
 
 import Truck from "./Truck";
 import EmployeeScheduleItem from "./EmployeeScheduleItem";
 import ScheduleDivider from "./ScheduleDivider";
 import { setTruckEmployee } from "../../reducers/trucks";
-import { setEmployeeTruck } from "../../reducers/schedule";
+import { removeFromSchedule } from "../../reducers/schedule";
+
+const GeneratePreview = () => {
+  const { style, item } = useContext(Preview.Context);
+  return (
+    <div style={{ ...style, backgroundColor: "#d9f6ff", width: "90%", padding: "8px", border: "1px solid #52616b" }}>
+      {item.name}
+    </div>
+  );
+};
 
 const AssignTableDiv = styled.div`
   display: grid;
@@ -30,22 +37,19 @@ const AssignTableDiv = styled.div`
   }
 `;
 
-const TruckList = styled.ul`
+const TruckList = styled.div`
   grid-area: trucks;
   border-top: 5px solid #52616b;
-  list-style: none;
-  padding: 0;
-  margin: 0;
   overflow-x: auto;
 `;
 
-const ScheduleList = styled.ul`
+const ScheduleList = styled.div`
   grid-area: schedule;
   border-top: 5px solid #52616b;
-  margin: 0;
-  padding: 0;
-  list-style: none;
   overflow-x: overlay;
+  > div {
+    border-bottom: 1px solid #1e2022;
+  }
 `;
 
 const ScheduleHeader = styled.h2`
@@ -64,51 +68,42 @@ const TrucksHeader = styled.h2`
   }
 `;
 
-const AssignTable = ({ schedule: { schedule, loading }, trucks, setTruckEmployee, setEmployeeTruck }) => {
+const AssignTable = ({ schedule: { employees, loading }, trucks, setTruckEmployee, removeFromSchedule }) => {
   const handleEmployeeDrop = useCallback(
     (slotIndex, truckNumber, employee) => {
       setTruckEmployee({ slotIndex, truckNumber, employee });
-      setEmployeeTruck({ employee, truckNumber });
+      removeFromSchedule({ id: employee.id });
     },
-    [setTruckEmployee, setEmployeeTruck]
+    [setTruckEmployee, removeFromSchedule]
   );
 
   return (
     <AssignTableDiv>
       <ScheduleHeader>Schedule</ScheduleHeader>
       <TrucksHeader>Table</TrucksHeader>
+
       <DndProvider backend={MultiBackend} options={HTML5toTouch}>
-        {!loading && (
+        {employees && (
           <ScheduleList>
             {/* <iframe title="w2w" src="https://whentowork.com/mob/logins.htm"></iframe> */}
-            {schedule.map(scheduleSection => (
-              <React.Fragment key={scheduleSection.scheduleSection.id}>
-                {scheduleSection.employees.length > 0 && (
-                  <ScheduleDivider
-                    key={scheduleSection.scheduleSection.start}
-                    time={scheduleSection.scheduleSection.start}
-                    count={scheduleSection.employees.length}
-                  />
-                )}
-                {scheduleSection.employees.map(employee => (
-                  <EmployeeScheduleItem
-                    key={employee.id}
-                    employee={employee}
-                    handleEmployeeDrop={handleEmployeeDrop}
-                  ></EmployeeScheduleItem>
-                ))}
-              </React.Fragment>
-            ))}
+            {employees &&
+              employees.map(emp => (
+                <EmployeeScheduleItem
+                  key={emp.id}
+                  employee={emp}
+                  handleEmployeeDrop={handleEmployeeDrop}
+                ></EmployeeScheduleItem>
+              ))}
           </ScheduleList>
         )}
-
         <TruckList>
-          <li>
-            {trucks.map((truck, index) => {
-              return <Truck key={truck.id} index={index} truck={truck}></Truck>;
-            })}
-          </li>
+          {trucks.map((truck, index) => {
+            return <Truck key={truck.id} index={index} truck={truck} handleEmployeeDrop={handleEmployeeDrop}></Truck>;
+          })}
         </TruckList>
+        <Preview>
+          <GeneratePreview />
+        </Preview>
       </DndProvider>
     </AssignTableDiv>
   );
@@ -119,4 +114,4 @@ const mapStateToProps = state => ({
   schedule: state.schedule
 });
 
-export default connect(mapStateToProps, { setTruckEmployee, setEmployeeTruck })(React.memo(AssignTable));
+export default connect(mapStateToProps, { setTruckEmployee, removeFromSchedule })(React.memo(AssignTable));
