@@ -81,7 +81,6 @@ const AssignTable = ({ schedule: { employees, loading }, trucks, setTruckEmploye
     <AssignTableDiv>
       <ScheduleHeader>Schedule</ScheduleHeader>
       <TrucksHeader>Table</TrucksHeader>
-
       <DndProvider backend={MultiBackend} options={HTML5toTouch}>
         {employees && (
           <ScheduleList>
