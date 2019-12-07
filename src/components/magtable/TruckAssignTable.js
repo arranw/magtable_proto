@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { DndProvider } from "react-dnd";
 import styled from "styled-components";
 import HTML5Backend from "react-dnd-html5-backend";
-import TouchBackend from "react-dnd-touch-backend";
-import MultiBackend from "react-dnd-multi-backend";
-import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
+
+// import MultiBackend from "react-dnd-multi-backend";
+// import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
 
 import Truck from "./Truck";
 import EmployeeScheduleItem from "./EmployeeScheduleItem";
@@ -77,10 +77,13 @@ const AssignTable = ({ schedule: { schedule, loading }, trucks, setTruckEmployee
     <AssignTableDiv>
       <ScheduleHeader>Schedule</ScheduleHeader>
       <TrucksHeader>Table</TrucksHeader>
-      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+      <DndProvider
+        backend={HTML5Backend}
+        // options={HTML5toTouch}
+      >
         {!loading && (
           <ScheduleList>
-            {/* <iframe title="w2w" src="https://whentowork.com/mob/logins.htm"></iframe> */}
+            <iframe title="w2w" src="https://whentowork.com/mob/logins.htm"></iframe>
             {schedule.map(scheduleSection => (
               <React.Fragment key={scheduleSection.scheduleSection.id}>
                 {scheduleSection.employees.length > 0 && (
