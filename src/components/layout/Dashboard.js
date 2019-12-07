@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import TruckPic from "../../pics/trucks.jpg";
 import AssignPic from "../../pics/assign.jpg";
 import AssignPic2 from "../../pics/assign2.jpg";
+import AssignPic3 from "../../pics/assign3.jpg";
 import SnagPic from "../../pics/snag.jpg";
+import ViewTable from "../magtable/ViewTable";
 
 const DashboardDiv = styled.div`
   a {
@@ -75,10 +77,8 @@ export const Dashboard = () => {
           <CardLabel>
             View <i className="fas fa-eye"></i>
           </CardLabel>
-          <iframe disabled src="/table/assign">
-            <div></div>{" "}
-          </iframe>
-          {/* <img alt="" src={AssignPic}></img> */}
+          <ViewTable></ViewTable>
+          {/* <img alt="" src={AssignPic3}></img> */}
         </Card>
       </Link>
       <Link to="/table/assign">

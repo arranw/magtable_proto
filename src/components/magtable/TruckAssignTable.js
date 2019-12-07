@@ -68,7 +68,12 @@ const TrucksHeader = styled.h2`
   }
 `;
 
-const AssignTable = ({ schedule: { employees, loading }, trucks, setTruckEmployee, removeFromSchedule }) => {
+const AssignTable = ({
+  schedule: { employees, startTimes, loading },
+  trucks,
+  setTruckEmployee,
+  removeFromSchedule
+}) => {
   const handleEmployeeDrop = useCallback(
     (slotIndex, truckNumber, employee) => {
       setTruckEmployee({ slotIndex, truckNumber, employee });
@@ -76,6 +81,8 @@ const AssignTable = ({ schedule: { employees, loading }, trucks, setTruckEmploye
     },
     [setTruckEmployee, removeFromSchedule]
   );
+
+  let lastStartTime;
 
   return (
     <AssignTableDiv>
@@ -86,13 +93,20 @@ const AssignTable = ({ schedule: { employees, loading }, trucks, setTruckEmploye
           <ScheduleList>
             {/* <iframe title="w2w" src="https://whentowork.com/mob/logins.htm"></iframe> */}
             {employees &&
-              employees.map(emp => (
-                <EmployeeScheduleItem
-                  key={emp.id}
-                  employee={emp}
-                  handleEmployeeDrop={handleEmployeeDrop}
-                ></EmployeeScheduleItem>
-              ))}
+              employees.map(emp => {
+                let header;
+                if (emp.start !== lastStartTime) {
+                  lastStartTime = emp.start;
+                  var count = employees.reduce((acc, cur) => (cur.start === lastStartTime ? ++acc : acc), 0);
+                  header = <ScheduleDivider time={emp.start} count={count}></ScheduleDivider>;
+                }
+                return (
+                  <React.Fragment key={emp.id}>
+                    {header}
+                    <EmployeeScheduleItem employee={emp} handleEmployeeDrop={handleEmployeeDrop}></EmployeeScheduleItem>
+                  </React.Fragment>
+                );
+              })}
           </ScheduleList>
         )}
         <TruckList>

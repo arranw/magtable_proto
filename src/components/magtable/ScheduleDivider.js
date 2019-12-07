@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-const ListDivider = styled.li`
+
+const ListDivider = styled.div`
   padding: 0.25rem;
   /* margin-top: 0.5rem; */
   background: #52616b;
